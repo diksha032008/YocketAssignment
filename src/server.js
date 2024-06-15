@@ -81,7 +81,7 @@ app.post('/api/start-simulation', (req, res) => {
     const capturingCity = cities.find(city => city.name === fugitiveCity);
     console.log('Capturing city:', capturingCity);
     if (capturingCity && capturingCop) {
-        res.json({ success: true, capturingCop: capturingCop.copName, city: capturingCity });
+        res.json({ success: true, capturingCop: capturingCop.copName, city: capturingCity, vehicle: selectedVehicleCop1.name });
     } else {
         res.json({ success: false });
     }
@@ -93,7 +93,15 @@ app.get('/result', (req, res) => {
     const capturingCop = copsSelections.find(selection => selection.cityName === fugitiveCity);
 
     if (capturingCop) {
-        res.json({ success: true, capturingCop: capturingCop.copName });
+        const capturingCity = cities.find(city => city.name === fugitiveCity);
+        const capturingVehicle = vehiclesarr.find(vehicle => vehicle.name === capturingCop.vehicleName);
+
+        res.json({
+            success: true,
+            capturingCop: capturingCop.copName,
+            city: capturingCity,
+            vehicle: capturingVehicle
+        });
     } else {
         res.json({ success: false });
     }
